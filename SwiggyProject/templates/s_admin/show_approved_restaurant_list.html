@@ -1,0 +1,42 @@
+{% extends 's_admin/common.html' %}
+{% block common %}
+    {% load static %}
+    {% include 's_admin/admin_menu.html' %}
+    <style>
+        th {
+            text-align: center
+        }
+    </style>
+    {% if request.session.status %}
+    <table align="center" width="700" border="2">
+        <tr>
+            <th colspan="8" style="text-align: center;color: yellow;background-color: red"><h1>Approved Restaurant Information</h1></th>
+        </tr>
+        <tr style="background-color:wheat">
+            <th>Resto Id</th>
+            <th>Restaurant Name</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th> Area</th>
+            <th>Restaurant Type</th>
+
+        </tr>
+        {% for approved_list in approved_rest_list %}
+            <tr>
+                <th>{{ approved_list.restaurant_id }}</th>
+                <th>{{ approved_list.restaurant_name }}</th>
+                <th>{{ approved_list.restaurant_contact }}</th>
+                <th>{{ approved_list.restaurant_email }}</th>
+                <th>{{ approved_list.restaurant_area.area_name }}<br>
+                    {{ approved_list.restaurant_area.city.city_name }}<br>
+                    {{ approved_list.restaurant_area.city.state.state_name }}</th>
+                <th>{{ approved_list.restaurant_type }}</th>
+
+            </tr>
+        {% endfor %}
+
+
+    </table>
+    {% endif %}
+
+{% endblock %}

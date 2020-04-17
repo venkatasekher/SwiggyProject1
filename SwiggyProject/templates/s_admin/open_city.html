@@ -1,0 +1,111 @@
+{% extends 's_admin/common.html' %}
+{% block common %}
+    {% load static %}
+    {% include 's_admin/admin_menu.html' %}
+    <style>
+        th {
+            text-align: center;
+        }
+    </style>
+    {% if request.session.status %}
+        <table align="center">
+            <tr>
+                <th height="200">
+                    {% if city_form %}
+
+                        <form action="{% url 'save_city' %}" method="post">
+                            {% csrf_token %}
+                            <table align="center" style="background-color: gold" width="500">
+                                <tr>
+                                    <th colspan="2" style="text-align: center"><h1>City Save Operation</h1></th>
+                                </tr>
+                                <tr>
+                                    <th>{{ city_form }}</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" style="text-align:center">
+                                        <button type="submit">Save</button>
+                                    </th>
+                                </tr>
+                                {% for error in messages %}
+                                    {% if error %}
+                                        <tr>
+                                            <th>{{ error }}</th>
+                                        </tr>
+                                    {% endif %}
+
+                                {% endfor %}
+
+                            </table>
+                        </form>
+                    {% elif edit_city_data %}
+                        <form action="{% url 'update_city' %}" method="post">
+                            {% csrf_token %}
+                            <table align="center" style="background-color: cornflowerblue" width="500">
+                                <tr>
+                                    <th colspan="2"><h1>City Update Operation</h1></th>
+                                </tr>
+                                <tr>
+                                    <th><input type="hidden" value="{{ edit_city_data.city_id }}" name="city_id"></th>
+                                </tr>
+                                <tr>
+                                    <th>City Name</th>
+                                    <th><input type="text" value="{{ edit_city_data.city_name }}" name="city_name"></th>
+                                </tr>
+                                {#                            <tr>#}
+                                {#                                <th><input type="text" value="{{ edit_city_data.state_id }}" name="state_id"></th>#}
+                                {#                            </tr>#}
+                                <tr>
+                                    <th>State Name</th>
+                                    <th><input type="text" value="{{ edit_city_data.state_name }}" readonly
+                                               name="state_name"></th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" style="text-align: center">
+                                        <button type="submit">Update</button>
+                                    </th>
+                                </tr>
+                            </table>
+                        </form>
+                    {% endif %}
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <table align="center" width="500" style="background-color: fuchsia">
+                        <tr style="background-color: aquamarine">
+                            <th>City Id</th>
+                            <th>City Name</th>
+                            <th>State Name</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+                        </tr>
+                        {% for city in city_list %}
+                            <tr>
+                                <th>{{ city.city_id }}</th>
+                                <th>{{ city.city_name }}</th>
+                                <th>{{ city.state.state_name }}</th>
+                                <th>
+                                    <a href="{% url 'edit_city' %}?city_id={{ city.city_id }}&city_name={{ city.city_name }}&state_name={{ city.state.state_name }}">
+                                        <img src="{% static 'images/refresh.png' %}" width="25" height="25" alt="">
+                                        {#                                    &state_id={{city.state_id}}#}
+                                    </a>
+                                </th>
+                                <th><a href="{% url 'delete_city' %}?city_id={{ city.city_id }}">
+                                    <img src="{% static 'images/rubbish.png' %}" width="25" height="25" alt="">
+                                </a>
+                                </th>
+                            </tr>
+
+                        {% endfor %}
+
+
+                    </table>
+                </th>
+            </tr>
+        </table>
+    {% else %}
+        <h3 style="color: red;text-align: center">Please do Login </h3>
+    {% endif %}
+
+{% endblock %}

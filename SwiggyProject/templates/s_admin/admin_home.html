@@ -1,0 +1,14 @@
+{% extends 's_admin/common.html' %}
+
+{% block common %}
+    {% include 's_admin/admin_menu.html' %}
+    {% if request.session.status %}
+        <table>
+            <tr>
+                <th><h1 style="color:darkcyan">Welcome to Admin</h1></th>
+            </tr>
+        </table>
+    {% else %}
+        <h3 style="color: red;text-align: center">Please do Login </h3>
+    {% endif %}
+{% endblock %}

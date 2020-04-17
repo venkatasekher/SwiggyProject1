@@ -1,0 +1,52 @@
+{% extends 's_admin/common.html' %}
+{% block common %}
+    {% load static %}
+    {% include 's_admin/admin_menu.html' %}
+    <style>
+        th {
+            text-align: center
+        }
+    </style>
+    {% if request.session.status %}
+    <table align="center" width="700" border="2">
+        <tr>
+            <th colspan="8" style="text-align: center;color: tomato;"><h1>Pending Restaurant Information</h1></th>
+        </tr>
+        <tr style="background-color:lawngreen">
+            <th>Resto Id</th>
+            <th>Restaurant Name</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th> Area</th>
+            <th>Restaurant Type</th>
+            <th>Approve</th>
+            <th>Cancel</th>
+        </tr>
+        {% for pending_rest in pending_rest_list %}
+            <tr>
+                <th>{{ pending_rest.restaurant_id }}</th>
+                <th>{{ pending_rest.restaurant_name }}</th>
+                <th>{{ pending_rest.restaurant_contact }}</th>
+                <th>{{ pending_rest.restaurant_email }}</th>
+                <th>{{ pending_rest.restaurant_area.area_name }}<br>
+                    {{ pending_rest.restaurant_area.city.city_name }}<br>
+                    {{ pending_rest.restaurant_area.city.state.state_name }}</th>
+                <th>{{ pending_rest.restaurant_type }}</th>
+                <th>
+                    <a href="{% url 'approved_restaurant_info' %}?restaurant_id={{ pending_rest.restaurant_id }}">
+                        <img src="{% static 'images/approve.jpg' %}" width="35" height="35" alt="">
+                    </a>
+                </th>
+                <th>
+                    <a href="{% url 'cancelled_restaurant_info'%}?restaurant_id={{pending_rest.restaurant_id  }}">
+                        <img src="{% static 'images/cancel.png' %}" width="35" height="35" alt="">
+                    </a>
+                </th>
+            </tr>
+        {% endfor %}
+
+
+    </table>
+    {% endif %}
+
+{% endblock %}
