@@ -50,4 +50,5 @@ urlpatterns = [
     path('cancelled_restaurant_info/',views.cancelled_restaurant_info,name='cancelled_restaurant_info'),
     path('show_approved_restaurant_list/',views.show_approved_restaurant_list,name='show_approved_restaurant_list'),
     path('show_cancelled_restaurant_list/',views.show_cancelled_restaurant_list,name='show_cancelled_restaurant_list'),
+    path('sample/',views.sample,name='sample'),
 ]

@@ -201,3 +201,7 @@ def show_approved_restaurant_list(request):
 def show_cancelled_restaurant_list(request):
     cancelled_rest_list = RestaurantModel.objects.filter(restaurant_status='cancelled')
     return render(request, 's_admin/show_cancelled_restaurant_list.html', {'cancelled_rest_list': cancelled_rest_list})
+
+
+def sample(request):
+    return redirect('admin_home1')
